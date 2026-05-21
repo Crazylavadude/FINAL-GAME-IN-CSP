@@ -19,8 +19,8 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
-    pygame.draw.circle(screen, "red", p.player_move(dt), 40)
-    p.player_move(dt)
+    pygame.draw.circle(screen, "red", p.player_move(), 40)
+    p.test_move()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
