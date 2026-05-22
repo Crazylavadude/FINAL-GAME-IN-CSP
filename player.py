@@ -6,27 +6,27 @@ class Player(Entity):
         self.direction = "East"
         self.current_goal_location = self.pos
 
-    def player_move(self):
+    def player_move(self, dt):
             self.current_goal_location = self.test_move()
             if(self.current_goal_location == self.pos):
                 return self.pos
             else:
-                y_difference = self.pos.y - self.current_goal_location.y
-                x_difference = self.pos.x - self.current_goal_location.x
-                if(y_difference < 300):
-                    self.pos.y = self.pos.y + y_difference
+                y_difference = self.pos.y - self.current_goal_location[1]
+                x_difference = self.pos.x - self.current_goal_location[0]
+                if(y_difference < 10 and y_difference > -10):
+                    self.pos.y = self.pos.y - y_difference
                 else:
                     if(y_difference < 0):
-                        self.pos.y = self.pos.y + -300
+                        self.pos.y = self.pos.y +10
                     elif(y_difference > 0):
-                        self.pos.y = self.pos.y + 300
-                if(x_difference < 300):
-                    self.pos.x = self.pos.x + x_difference
+                        self.pos.y = self.pos.y - 10
+                if(x_difference < 10 and x_difference > -10):
+                    self.pos.x = self.pos.x - x_difference
                 else:
                     if(x_difference < 0):
-                        self.pos.x = self.pos.x - 300
+                        self.pos.x = self.pos.x + 10
                     elif(x_difference > 0):
-                        self.pos.x = self.pos.x + 300
+                        self.pos.x = self.pos.x - 10
             '''
             temporary_direction = ""
             if(self.stun_count == 0):
