@@ -12,19 +12,19 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
+bg = pygame.image.load("background.png").convert()
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 p = player.Player(pygame, screen)
-B = boss.Boss(pygame, screen)
-a1 = attack1.attack1(pygame,screen,B)
+B = boss.Boss(pygame, screen, p)
+B.phase1()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
-    a1.spawn()
-    pygame.draw.circle(screen, "red", p.player_move(dt), 40)
+    screen.blit(bg,(0,0))
+    B.phase_ongoing(dt)
     # flip() the display to put your work on screen
     pygame.display.flip()
 
