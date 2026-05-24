@@ -3,23 +3,33 @@ from enemy_attack_box import attack_boxes
 class attack1(attack_boxes):
     def __init__(self, Game, screen, boss):
         super().__init__(Game, screen, boss)
+        self.images = [self.Game.image.load("puddle-frame-1.png").convert_alpha(),self.Game.image.load("puddle-frame-2.png").convert_alpha(),self.Game.image.load("puddle-frame-3.png").convert_alpha(),self.Game.image.load("puddle-frame-4.png").convert_alpha(),self.Game.image.load("attack-1-frame-1.png").convert_alpha(),self.Game.image.load("attack-1-frame-2.png").convert_alpha(),self.Game.image.load("attack-1-finish.png").convert_alpha()]
         self.invulnerability = 0
+        boss.current_attackers.append(self)
 
 
     def spawn(self):
         if(random.randint(0,120) == 1 and self.active_timer == 0):
             self.boss.current_attacks.append(self)
-            self.active_timer = 180
+            self.active_timer = 280
             self.determine_location()
         if(self.active_timer > 0):
             self.active_timer = self.active_timer -1
             
-            if(self.active_timer > 130):
-                    self.Game.draw.rect(self.screen,(255,100,100), (self.x, self.y,100,200))
-            elif(self.active_timer > 60):
-                    self.Game.draw.rect(self.screen,(255,0,0), (self.x, self.y,100,200))
-            elif(self.active_timer > 0):
-                    self.Game.draw.rect(self.screen,(0,0,0), (self.x, self.y,100,200))
+            if(self.active_timer > 250):
+                    self.screen.blit(self.images[0],(self.x- 20, self.y +40))
+            elif(self.active_timer > 220):
+                    self.screen.blit(self.images[1],(self.x- 20, self.y+40))
+            elif(self.active_timer > 190):
+                    self.screen.blit(self.images[2],(self.x- 20, self.y+40))
+            elif(self.active_timer > 160):
+                    self.screen.blit(self.images[3],(self.x- 20, self.y+40))
+            elif(self.active_timer > 130 or (self.active_timer <= 30 and self.active_timer > 0)):
+                    self.screen.blit(self.images[4],(self.x- 20, self.y+40))
+            elif(self.active_timer > 100 or (self.active_timer <= 50 and self.active_timer > 30)):
+                    self.screen.blit(self.images[5],(self.x- 20, self.y+40))
+            elif(self.active_timer > 50):
+                    self.screen.blit(self.images[6],(self.x- 20, self.y+40))
             else:
                 self.boss.current_attacks.remove(self)
         if(self.invulnerability > 0):

@@ -10,15 +10,33 @@ class Player(Entity):
 
     def player_move(self, dt):
             keys = self.attribute1.key.get_pressed()
-            if (keys[self.attribute1.K_w] and self.pos.y > 0):
+            if (keys[self.attribute1.K_w] and self.pos.y > 350):
                 self.pos.y -= 300 * dt
-            elif (keys[self.attribute1.K_s] and self.pos.y < 720):
+            elif (keys[self.attribute1.K_s] and self.pos.y < self.attribute2.get_height()):
                 self.pos.y += 300 * dt
             if (keys[self.attribute1.K_a] and self.pos.x > 0):
                 self.pos.x -= 300 * dt
-            elif (keys[self.attribute1.K_d ] and self.pos.x < 1280):
+            elif (keys[self.attribute1.K_d ] and self.pos.x < self.attribute2.get_width()):
                 self.pos.x += 300 * dt
             return self.pos
+    
+    def set_direction(self):
+        mouse_location = self.test_direction()
+        y_diff = self.get_y()- mouse_location[1]#if positive then mouse is above
+        x_diff = self.get_x() - mouse_location[0]#if positive mouse is to the left
+        if(x_diff != 0):
+            angle = math.degrees(math.atan(y_diff/x_diff))
+        elif(y_diff > 0):
+            return 270
+        elif(y_diff < 0):
+            return 90
+        if(x_diff > 0):
+            return 180 - angle
+        elif(x_diff < 0):
+            return -angle
+        return angle + 180
+
+        
     
     def test_direction(self):
         return(self.attribute1.mouse.get_pos())

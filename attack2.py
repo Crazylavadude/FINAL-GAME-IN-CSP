@@ -18,7 +18,7 @@ class attack2():
             half_chance = random.randint(1,2)
             if(half_chance == 1):
                 direction = direction + "y"
-                random_y = random.randint(50, 670)
+                random_y = random.randint(350, self.screen.get_height() - 50)
                 half_chance2 = random.randint(1,2)
                 if(half_chance2 == 1):
                     direction = direction + "l"
@@ -27,13 +27,13 @@ class attack2():
                     self.boss.current_attacks.append(f1)
                 else:
                     direction = direction + "r"
-                    f1 = Fireball(self.Game,self.screen, direction,1280,random_y, self.boss)
+                    f1 = Fireball(self.Game,self.screen, direction,self.screen.get_width(),random_y, self.boss)
                     self.boss.current_attackers.append(f1)
                     self.boss.current_attacks.append(f1)
 
             else:
                 direction = direction + "x"
-                random_x = random.randint(50, 1230)
+                random_x = random.randint(50, self.screen.get_width() - 50)
                 half_chance2 = random.randint(1,2)
                 if(half_chance2 == 1):
                     direction = direction + "t"
@@ -42,7 +42,7 @@ class attack2():
                     self.boss.current_attacks.append(f1)
                 else:
                     direction = direction + "d"
-                    f1 = Fireball(self.Game,self.screen, direction,random_x,720, self.boss)
+                    f1 = Fireball(self.Game,self.screen, direction,random_x,self.screen.get_height(), self.boss)
                     self.boss.current_attackers.append(f1)
                     self.boss.current_attacks.append(f1)
         
