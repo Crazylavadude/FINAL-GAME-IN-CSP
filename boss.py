@@ -2,6 +2,9 @@ from Entity import Entity
 from attack1 import attack1
 from attack2 import attack2
 from fireball import Fireball
+from attack3 import Attack3
+from summon_wizard import Summon_wizard
+from mage_fireball import Mage_fireball
 class Boss(Entity):
     def __init__(self, game, screen, player):
         super().__init__(game, screen)
@@ -25,8 +28,9 @@ class Boss(Entity):
         self.current_attackers.clear()
         self.current_attacks.clear()
         self.boss_health = 5
-        a1 = attack1(self.attribute1, self.attribute2,self)
-        a1.spawn()
+        Summon_wizard(self.attribute1,self.attribute2,self ,50 ,self.attribute2.get_height()/2)
+        attack1(self.attribute1, self.attribute2,self)
+
 
     def phase2(self):
         self.boss_health = 10
@@ -147,6 +151,13 @@ class Boss(Entity):
                         print(self.player_health)
                     elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 50):
                         object.despawn()
+            elif(isinstance(object, Mage_fireball)):
+                if(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+50 and self.player.get_y() > object.get_y() and self.player.get_y() < object.get_y()+50 and self.player.invulnerability == 0):
+                    self.player_health -= 1
+                    self.player.invulnerability = 20
+            elif(isinstance(object, Summon_wizard)):
+                if(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 75):
+                    object.despawn()
         if(self.player_health <= 0):
             self.phase1()
             

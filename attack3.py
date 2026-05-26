@@ -1,4 +1,6 @@
 from enemy_attack_box import attack_boxes
+from summon_wizard import Summon_wizard
+from summon_dagger import Summon_dagger
 import random
 class Attack3():
     def __init__(self, Game, screen, boss):
@@ -7,6 +9,7 @@ class Attack3():
         self.screen = screen
         self.boss = boss
         self.timer = 0
+        boss.current_attackers.append(self)
 
     def spawn(self):
         if(self.summon_count < 3 and self.timer == 0):
@@ -20,8 +23,10 @@ class Attack3():
         if(self.timer > 0):
             self.timer -= 1
     def summon_wizard(self):
+        Summon_wizard(self.Game,self.screen,self.boss)
         return
     def summon_dagger(self):
+        Summon_dagger(self.Game,self.screen,self.boss)
         return
 
             
