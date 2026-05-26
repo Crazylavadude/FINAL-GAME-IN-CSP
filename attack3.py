@@ -23,10 +23,10 @@ class Attack3():
         if(self.timer > 0):
             self.timer -= 1
     def summon_wizard(self):
-        Summon_wizard(self.Game,self.screen,self.boss)
+        Summon_wizard(self.Game,self.screen,self.boss,self,0,0)
         return
     def summon_dagger(self):
-        Summon_dagger(self.Game,self.screen,self.boss)
+        Summon_dagger(self.Game,self.screen,self.boss,self,0,0)
         return
 
             

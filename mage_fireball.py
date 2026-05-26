@@ -10,18 +10,19 @@ class Mage_fireball():
         self.desired_angle = 0
         boss.current_attackers.append(self)
         boss.current_attacks.append(self)
-        #self.lifespan = 15 * 60
         self.count = 0
         self.image = [self.Game.image.load("mage-fireball-1.png").convert_alpha(),self.Game.image.load("mage-fireball-2.png").convert_alpha()]
 
     def spawn(self):
-        #if(self.lifespan == 0):
-            #self.despawn()
-       # else:
-            #self.lifespan -= 1
             desired_angle = self.get_desired_angle()
             if(desired_angle == self.current_angle):
                 counter_clockwise = 0
+            elif(self.current_angle > 270 and self.desired_angle < 90):
+                print("yo")
+                print(self.current_angle)
+                print(self.desired_angle)
+                counter_clockwise = (360 - self.current_angle) + self.desired_angle
+                print(counter_clockwise)
             else:
                 counter_clockwise = desired_angle -self.current_angle
             clockwise = 360 - counter_clockwise

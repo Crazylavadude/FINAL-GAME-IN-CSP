@@ -1,12 +1,13 @@
 from mage_fireball import Mage_fireball
 import random
 class Summon_wizard():
-    def __init__(self, Game, screen, boss,x,y):
+    def __init__(self, Game, screen, boss, attack3, x,y):
         self.Game = Game
         self.screen =screen
         self.boss = boss
         self.x = x
         self.y = y
+        self.attack3 = attack3
         boss.current_attackers.append(self)
         boss.current_attacks.append(self)
         self.cooldown = 5 * 60
@@ -18,7 +19,7 @@ class Summon_wizard():
     def spawn(self):
         self.screen.blit(self.image,(self.x-12.5,self.y-25))
         if(self.cooldown == 0):
-            self.dontmove = 360
+            self.dontmove += 360
             self.my_fireballs.append(Mage_fireball(self.Game,self.screen,self.boss,self.x,self.y))
             self.cooldown = 15*60
         elif(self.cooldown > 0):
@@ -43,6 +44,7 @@ class Summon_wizard():
     def despawn(self):
         self.boss.current_attackers.remove(self)
         self.boss.current_attacks.remove(self)
+        self.attack3.summon_count -= 1
         for object in self.my_fireballs:
             object.despawn()
 

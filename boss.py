@@ -3,6 +3,7 @@ from attack1 import attack1
 from attack2 import attack2
 from fireball import Fireball
 from attack3 import Attack3
+from summon_dagger import Summon_dagger
 from summon_wizard import Summon_wizard
 from mage_fireball import Mage_fireball
 class Boss(Entity):
@@ -28,7 +29,7 @@ class Boss(Entity):
         self.current_attackers.clear()
         self.current_attacks.clear()
         self.boss_health = 5
-        Summon_wizard(self.attribute1,self.attribute2,self ,50 ,self.attribute2.get_height()/2)
+        Attack3(self.attribute1,self.attribute2,self)
         attack1(self.attribute1, self.attribute2,self)
 
 
@@ -156,6 +157,9 @@ class Boss(Entity):
                     self.player_health -= 1
                     self.player.invulnerability = 20
             elif(isinstance(object, Summon_wizard)):
+                if(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 75):
+                    object.despawn()
+            elif(isinstance(object, Summon_dagger)):
                 if(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 75):
                     object.despawn()
         if(self.player_health <= 0):
