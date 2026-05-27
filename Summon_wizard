@@ -1,3 +1,0 @@
-class Summon_wizard():
-    def __init__(self):
-        pass
