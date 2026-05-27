@@ -26,7 +26,10 @@ class Attack3():
         Summon_wizard(self.Game,self.screen,self.boss,self,0,0)
         return
     def summon_dagger(self):
-        Summon_dagger(self.Game,self.screen,self.boss,self,0,0)
+        random_x = random.randint(50,1570)
+        random_y = random.randint(400,800)
+
+        Summon_dagger(self.Game,self.screen,self.boss,self,random_x,random_y)
         return
 
             

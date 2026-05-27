@@ -67,7 +67,7 @@ class Mage_fireball():
     
     def get_tangent_angle(self, current_angle):
         x_diff = self.x - self.boss.player.get_x()
-        y_diff = self.y - self.boss.player.get_y()
+        #y_diff = self.y - self.boss.player.get_y()
         if(x_diff != 0):
             if(current_angle < 90):
                 return current_angle

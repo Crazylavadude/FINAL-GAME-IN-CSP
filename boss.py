@@ -6,6 +6,7 @@ from attack3 import Attack3
 from summon_dagger import Summon_dagger
 from summon_wizard import Summon_wizard
 from mage_fireball import Mage_fireball
+from dagger import Dagger
 class Boss(Entity):
     def __init__(self, game, screen, player):
         super().__init__(game, screen)
@@ -117,17 +118,16 @@ class Boss(Entity):
             self.attribute2.blit(self.bar_image[0],(self.attribute2.get_width()/2 - 600,self.attribute2.get_height() - 200))
 
 
-
     def check_player_status(self):
         for object in self.current_attacks:
             if(isinstance(object, attack1)):
-                if(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+100 and self.player.get_y() > object.get_y() + 40 and self.player.get_y() < object.get_y()+200 and object.active_timer < 100 and object.active_timer > 50 and self.player.invulnerability == 0):
+                if(self.player.get_x()+20 > object.get_x() and self.player.get_x() - 20 < object.get_x()+100 and self.player.get_y() +20 > object.get_y() + 40 and self.player.get_y()-20 < object.get_y()+200 and object.active_timer < 100 and object.active_timer > 50 and self.player.invulnerability == 0):
                     self.player_health = self.player_health - 1
                     self.player.invulnerability = 60
-                elif(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+100 and self.player.get_y() > object.get_y() + 100 and self.player.get_y() < object.get_y()+200 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30)) and self.player.invulnerability == 0):
+                elif(self.player.get_x()+20 > object.get_x() and self.player.get_x() -20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 100 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30)) and self.player.invulnerability == 0):
                     self.player_health = self.player_health - 1
                     self.player.invulnerability = 60
-                elif(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+100 and self.player.get_y() > object.get_y() + 160 and self.player.get_y() < object.get_y()+200 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0)) and self.player.invulnerability == 0):
+                elif(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 160 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0)) and self.player.invulnerability == 0):
                     self.player_health = self.player_health - 1
                     self.player.invulnerability = 60
                 if(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 100 and object.active_timer < 100 and object.active_timer > 50  and object.invulnerability == 0):
@@ -144,7 +144,7 @@ class Boss(Entity):
                     self.boss_health = self.boss_health - 1
                     self.player_attack = None
             elif(isinstance(object, Fireball)):
-                    if(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+50 and self.player.get_y() > object.get_y() and self.player.get_y() < object.get_y()+50):
+                    if(self.player.get_x() +20 > object.get_x() and self.player.get_x()-20 < object.get_x()+50 and self.player.get_y()+20 > object.get_y() and self.player.get_y()-20 < object.get_y()+50):
                         if(self.player.invulnerability == 0):
                             self.player_health -= 1
                             self.player.invulnerability = 20
@@ -153,7 +153,7 @@ class Boss(Entity):
                     elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 50):
                         object.despawn()
             elif(isinstance(object, Mage_fireball)):
-                if(self.player.get_x() > object.get_x() and self.player.get_x() < object.get_x()+50 and self.player.get_y() > object.get_y() and self.player.get_y() < object.get_y()+50 and self.player.invulnerability == 0):
+                if(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+50 and self.player.get_y()+20 > object.get_y() and self.player.get_y()-20 < object.get_y()+50 and self.player.invulnerability == 0):
                     self.player_health -= 1
                     self.player.invulnerability = 20
             elif(isinstance(object, Summon_wizard)):
@@ -162,6 +162,10 @@ class Boss(Entity):
             elif(isinstance(object, Summon_dagger)):
                 if(self.player_attack != None and self.player_attack[0] < object.get_x() + 50 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 75):
                     object.despawn()
+            elif(isinstance(object, Dagger)):
+                if(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+20 and self.player.get_y()+20 > object.get_y() and self.player.get_y()-20 < object.get_y()+20 and self.player.invulnerability == 0):
+                    self.player_health -= 1
+                    self.player.invulnerability = 20
         if(self.player_health <= 0):
             self.phase1()
             
