@@ -1,3 +1,0 @@
-class Summon_dagger():
-    def __init__(self):
-        pass
