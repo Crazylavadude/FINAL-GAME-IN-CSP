@@ -15,17 +15,16 @@ class Mage_fireball():
 
     def spawn(self):
             desired_angle = self.get_desired_angle()
+            if(self.current_angle > 360):
+                self.current_angle = self.current_angle - 360
             if(desired_angle == self.current_angle):
                 counter_clockwise = 0
-            elif(self.current_angle > 270 and self.desired_angle < 90):
-                print("yo")
-                print(self.current_angle)
-                print(self.desired_angle)
-                counter_clockwise = (360 - self.current_angle) + self.desired_angle
-                print(counter_clockwise)
             else:
                 counter_clockwise = desired_angle -self.current_angle
+                if(counter_clockwise < 0):
+                    counter_clockwise = 360 + counter_clockwise
             clockwise = 360 - counter_clockwise
+
             if(counter_clockwise <= clockwise):
                 self.current_angle = counter_clockwise/50 + self.current_angle 
             elif(clockwise < counter_clockwise):
