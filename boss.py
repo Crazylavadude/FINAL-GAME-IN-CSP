@@ -14,7 +14,7 @@ class Boss(Entity):
         self.current_attacks = []
         self.player_attack = None
         self.current_attackers = []
-        self.player_health = 10
+        self.player_health = 5
         self.boss_health = 0
         self.player_image = self.attribute1.image.load("sludgetop.png").convert_alpha()
         self.heart_images = [self.attribute1.image.load("slime-heart.png").convert_alpha(), self.attribute1.image.load("slime-heart-broken.png").convert_alpha()]
@@ -26,7 +26,7 @@ class Boss(Entity):
 
     def phase1(self):
         self.phase = 1
-        self.player_health = 10
+        self.player_health = 5
         self.current_attackers.clear()
         self.current_attacks.clear()
         self.boss_health = 5
@@ -38,6 +38,8 @@ class Boss(Entity):
         self.boss_health = 10
         attack1(self.attribute1, self.attribute2,self)
         attack2(self.attribute1, self.attribute2,self)
+        self.current_attackers.append(self.current_attackers[0])
+        self.current_attackers.append(self.current_attackers[2])
         self.phase = 2
 
     def setup(self,):
@@ -101,7 +103,7 @@ class Boss(Entity):
         if(self.player.invulnerability > 0):
             self.player.invulnerability = self.player.invulnerability -1
         self.check_player_status()
-        for num in range(10):
+        for num in range(5):
             if(num < self.player_health):
                 self.attribute2.blit(self.heart_images[0], (0 + 50 * num,0))
             else:
@@ -121,28 +123,28 @@ class Boss(Entity):
     def check_player_status(self):
         for object in self.current_attacks:
             if(isinstance(object, attack1)):
-                if(self.player.get_x()+20 > object.get_x() and self.player.get_x() - 20 < object.get_x()+100 and self.player.get_y() +20 > object.get_y() + 40 and self.player.get_y()-20 < object.get_y()+200 and object.active_timer < 100 and object.active_timer > 50 and self.player.invulnerability == 0):
-                    self.player_health = self.player_health - 1
-                    self.player.invulnerability = 60
-                elif(self.player.get_x()+20 > object.get_x() and self.player.get_x() -20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 100 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30)) and self.player.invulnerability == 0):
-                    self.player_health = self.player_health - 1
-                    self.player.invulnerability = 60
-                elif(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 160 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0)) and self.player.invulnerability == 0):
-                    self.player_health = self.player_health - 1
-                    self.player.invulnerability = 60
-                if(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 100 and object.active_timer < 100 and object.active_timer > 50  and object.invulnerability == 0):
-                    object.invulnerability = 60
-                    self.boss_health = self.boss_health - 1
-                    self.player_attack = None
-                    print(self.boss_health)
-                elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 100 and self.player_attack[1] > object.get_y() - 100 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30))  and object.invulnerability == 0):
-                    object.invulnerability = 60
-                    self.boss_health = self.boss_health - 1
-                    self.player_attack = None
-                elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 160 and self.player_attack[1] > object.get_y() - 100 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0))  and object.invulnerability == 0):
-                    object.invulnerability = 60
-                    self.boss_health = self.boss_health - 1
-                    self.player_attack = None
+                    if(self.player.get_x()+20 > object.get_x() and self.player.get_x() - 20 < object.get_x()+100 and self.player.get_y() +20 > object.get_y() + 40 and self.player.get_y()-20 < object.get_y()+200 and object.active_timer < 100 and object.active_timer > 50 and self.player.invulnerability == 0):
+                        self.player_health = self.player_health - 1
+                        self.player.invulnerability = 60
+                    elif(self.player.get_x()+20 > object.get_x() and self.player.get_x() -20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 100 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30)) and self.player.invulnerability == 0):
+                        self.player_health = self.player_health - 1
+                        self.player.invulnerability = 60
+                    elif(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+100 and self.player.get_y()+20 > object.get_y() + 160 and self.player.get_y()-20 < object.get_y()+200 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0)) and self.player.invulnerability == 0):
+                        self.player_health = self.player_health - 1
+                        self.player.invulnerability = 60
+                    if(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 40 and self.player_attack[1] > object.get_y() - 100 and object.active_timer < 100 and object.active_timer > 50  and object.invulnerability == 0):
+                        object.invulnerability = 60
+                        self.boss_health = self.boss_health - 1
+                        self.player_attack = None
+                        print(self.boss_health)
+                    elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 100 and self.player_attack[1] > object.get_y() - 100 and ((object.active_timer < 130 and object.active_timer > 100)or(object.active_timer < 50 and object.active_timer > 30))  and object.invulnerability == 0):
+                        object.invulnerability = 60
+                        self.boss_health = self.boss_health - 1
+                        self.player_attack = None
+                    elif(self.player_attack != None and self.player_attack[0] < object.get_x() + 100 and self.player_attack[0] + self.player_attack[2] > object.get_x() and self.player_attack[1] - self.player_attack[3] < object.get_y() + 160 and self.player_attack[1] > object.get_y() - 100 and ((object.active_timer < 160 and object.active_timer > 130)or(object.active_timer < 30 and object.active_timer > 0))  and object.invulnerability == 0):
+                        object.invulnerability = 60
+                        self.boss_health = self.boss_health - 1
+                        self.player_attack = None
             elif(isinstance(object, Fireball)):
                     if(self.player.get_x() +20 > object.get_x() and self.player.get_x()-20 < object.get_x()+50 and self.player.get_y()+20 > object.get_y() and self.player.get_y()-20 < object.get_y()+50):
                         if(self.player.invulnerability == 0):
@@ -166,9 +168,6 @@ class Boss(Entity):
                 if(self.player.get_x()+20 > object.get_x() and self.player.get_x()-20 < object.get_x()+20 and self.player.get_y()+20 > object.get_y() and self.player.get_y()-20 < object.get_y()+20 and self.player.invulnerability == 0):
                     self.player_health -= 1
                     self.player.invulnerability = 20
-        if(self.player_health <= 0):
-            self.phase1()
-            
 
                 
 

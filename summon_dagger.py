@@ -13,7 +13,7 @@ class Summon_dagger():
         self.image = self.Game.image.load("Summon-dagger.png").convert_alpha()
         boss.current_attackers.append(self)
         boss.current_attacks.append(self)
-        self.stun = 0
+        self.stun = 3*60
         self.goal_x = None
         self.goal_y = None
         self.speed_y = 0
@@ -51,15 +51,16 @@ class Summon_dagger():
     def spawn(self):
         speed = 5
         if(self.goal_x == None and self.goal_y == None):
-            self.goal_x = random.randint(50,1570)
+            self.goal_x = random.randint(50,1550)
             self.goal_y = random.randint(400,800)
         elif(self.speed_x == 0 and self.speed_y == 0):
             x_diff = self.goal_x - self.x
             y_diff = self.goal_y - self.y
-            time = math.sqrt(math.pow(x_diff,2) + math.pow(y_diff,2))/5
+            time = math.sqrt(math.pow(x_diff,2) + math.pow(y_diff,2))/speed
+            
             self.speed_x = x_diff/time
             self.speed_y = y_diff/time
-        elif(self.x == self.goal_x and self.y == self.goal_y):
+        elif(10 > abs(self.goal_x - self.x) and 10 > abs(self.goal_y - self.y)):
             self.goal_x = None
             self.goal_y = None
             self.speed_x = 0
