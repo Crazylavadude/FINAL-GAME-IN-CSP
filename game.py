@@ -16,6 +16,7 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 p = player.Player(pygame, screen)
 B = boss.Boss(pygame, screen, p)
 death_screen_bg = pygame.image.load("death.png").convert()
+win_screen = pygame.image.load("Winner.png").convert()
 
 def game_start():
     global running, dt
@@ -30,6 +31,13 @@ def game_start():
         B.phase_ongoing(dt)
         # flip() the display to put your work on screen
         pygame.display.flip()
+        if(B.boss_health <= 0 and B.death_count < 10):
+            while(running):
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                screen.blit(win_screen, (0, 0))
+                pygame.display.flip()
         if(B.player_health <= 0):
             going = True
             while (going and running):
@@ -42,6 +50,9 @@ def game_start():
                         if(mouse[0] < 1300 and mouse[0] > 300 and mouse[1] <680 and mouse[1] >480):
                             going = False
                             B.phase1()
+
+
+
                 screen.blit(death_screen_bg, (0, 0))
                 pygame.display.flip()
 

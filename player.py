@@ -27,9 +27,9 @@ class Player(Entity):
         if(x_diff != 0):
             angle = math.degrees(math.atan(y_diff/x_diff))
         elif(y_diff > 0):
-            return 270
-        elif(y_diff < 0):
             return 90
+        elif(y_diff < 0):
+            return 270
         if(x_diff > 0):
             return 180 - angle
         elif(x_diff < 0):
@@ -40,6 +40,114 @@ class Player(Entity):
     
     def test_direction(self):
         return(self.attribute1.mouse.get_pos())
+    
+    def experiment_attack(self):
+         mouse_location = self.test_direction()
+         y_diff = self.get_y()- mouse_location[1]#if positive then mouse is above
+         x_diff = self.get_x() - mouse_location[0]#if positive mouse is to the left
+         if(self.stun_count == 0):
+            self.stun_count = 20
+         if(x_diff != 0):
+            angle = math.degrees(math.atan(y_diff/x_diff))
+            if(x_diff > 0):
+                if(angle < -70):#south
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[5],(self.get_x() -100,self.get_y()+ 10))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[6],(self.get_x()-50,self.get_y()+ 30))
+                    else:
+                        self.attribute2.blit(self.sword_list[7],(self.get_x() + 10,self.get_y()))
+                    return [self.get_x() -50, self.get_y(), 100,100]
+                elif(angle < -50):#south west
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[4],(self.get_x()-120,self.get_y() - 50))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[5],(self.get_x() -100,self.get_y()+ 10))
+                    else:
+                        self.attribute2.blit(self.sword_list[6],(self.get_x()-50,self.get_y()+ 30))
+                    return [self.get_x() -100, self.get_y(), 100,100]
+                elif(angle > -50 and angle < 50):#west
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[3],(self.get_x()-90,self.get_y() - 90))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[4],(self.get_x() -120,self.get_y()-50))
+                    else:
+                        self.attribute2.blit(self.sword_list[5],(self.get_x()-100,self.get_y()+ 10))
+                    return [self.get_x() -100, self.get_y()-50, 100,100]
+                elif(angle > 50 and angle < 70):#north west
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[2],(self.get_x() - 40,self.get_y() - 110))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[3],(self.get_x() -90,self.get_y()-90))
+                    else:
+                        self.attribute2.blit(self.sword_list[4],(self.get_x()-120,self.get_y()-50))
+                    return [self.get_x() -100, self.get_y()-100, 100,100]   
+                else:#north
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[1],(self.get_x() + 10,self.get_y() - 90))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[2],(self.get_x() -40,self.get_y()-110))
+                    else:
+                        self.attribute2.blit(self.sword_list[3],(self.get_x()-90,self.get_y()-90))
+                    return [self.get_x() -50, self.get_y()-100, 100,100]
+            else:
+                if (angle < -70):#north
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[1],(self.get_x() + 10,self.get_y() - 90))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[2],(self.get_x() -40,self.get_y()-110))
+                    else:
+                        self.attribute2.blit(self.sword_list[3],(self.get_x()-90,self.get_y()-90))
+                    return [self.get_x() -50, self.get_y()-100, 100,100]
+                elif(angle < -50):#north east
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[0],(self.get_x() + 30,self.get_y() - 50))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[1],(self.get_x() +10,self.get_y()-90))
+                    else:
+                        self.attribute2.blit(self.sword_list[2],(self.get_x()-40,self.get_y()-110))
+                    return [self.get_x(), self.get_y()-100, 100,100]
+                elif(angle > -50 and angle < 50):#east
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[7],(self.get_x() + 10,self.get_y()))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[0],(self.get_x() +30,self.get_y()-50))
+                    else:
+                        self.attribute2.blit(self.sword_list[1],(self.get_x()+10,self.get_y()-90))
+                    return [self.get_x(), self.get_y()-50, 100,100]
+                elif(angle > 50 and angle < 70):#south east
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[6],(self.get_x() -50,self.get_y()+30))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[7],(self.get_x() +10,self.get_y()))
+                    else:
+                        self.attribute2.blit(self.sword_list[0],(self.get_x()+30,self.get_y()-50)) 
+                    return [self.get_x(), self.get_y(), 100,100]
+                else:#south
+                    if(self.stun_count > 13):
+                        self.attribute2.blit(self.sword_list[5],(self.get_x() -100,self.get_y()+ 10))
+                    elif(self.stun_count > 6):
+                        self.attribute2.blit(self.sword_list[6],(self.get_x()-50,self.get_y()+ 30))
+                    else:
+                        self.attribute2.blit(self.sword_list[7],(self.get_x() + 10,self.get_y()))
+                    return [self.get_x() -50, self.get_y(), 100,100]
+                    
+         else:
+            if(y_diff > 0):
+                if(self.stun_count > 13):
+                    self.attribute2.blit(self.sword_list[1],(self.get_x() + 10,self.get_y() - 90))
+                elif(self.stun_count > 6):
+                    self.attribute2.blit(self.sword_list[2],(self.get_x() -40,self.get_y()-110))
+                else:
+                    self.attribute2.blit(self.sword_list[3],(self.get_x()-90,self.get_y()-90))
+                
+            else:
+                if(self.stun_count > 13):
+                    self.attribute2.blit(self.sword_list[5],(self.get_x() -100,self.get_y()+ 10))
+                elif(self.stun_count > 6):
+                    self.attribute2.blit(self.sword_list[6],(self.get_x()-50,self.get_y()+ 30))
+                else:
+                    self.attribute2.blit(self.sword_list[7],(self.get_x() + 10,self.get_y()))
 
     
     def player_attack(self):
