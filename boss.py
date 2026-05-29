@@ -29,6 +29,7 @@ class Boss(Entity):
         self.sword = game.image.load("sword-east.png").convert_alpha()
 
     def phase1(self):
+        self.transition = False
         self.phase = 1
         self.player_health = 5
         self.current_attackers.clear()

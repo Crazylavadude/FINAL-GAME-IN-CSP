@@ -28,7 +28,7 @@ def game_start():
                 running = False
 
         # fill the screen with a color to wipe away anything from last frame
-        if(B.transition and frame > 30):
+        if(B.transition and frame > 0):
             screen.blit(back_ground_1,(0,0))
             frame -= 1
         elif(B.transition):
