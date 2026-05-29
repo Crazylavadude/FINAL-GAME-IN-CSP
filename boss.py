@@ -7,6 +7,7 @@ from summon_dagger import Summon_dagger
 from summon_wizard import Summon_wizard
 from mage_fireball import Mage_fireball
 from dagger import Dagger
+import math
 class Boss(Entity):
     def __init__(self, game, screen, player):
         super().__init__(game, screen)
@@ -23,6 +24,7 @@ class Boss(Entity):
         self.phase = 0
         self.setup_count = 299
         self.death_count = 280
+        self.transition = False
         self.boss= [game.image.load("bass-frame1.png").convert_alpha(),game.image.load("bass-frame2.png").convert_alpha(),game.image.load("bass-frame3.png").convert_alpha(),game.image.load("boss.png").convert_alpha(),game.image.load("puddle-frame-4.png").convert_alpha()]
         self.sword = game.image.load("sword-east.png").convert_alpha()
 
@@ -37,6 +39,7 @@ class Boss(Entity):
 
 
     def phase2(self):
+        self.transition = True
         self.boss_health = 10
         attack1(self.attribute1, self.attribute2,self)
         attack2(self.attribute1, self.attribute2,self)
@@ -122,6 +125,9 @@ class Boss(Entity):
             object.spawn()
         keys = self.attribute1.key.get_pressed()
         direction = self.player.set_direction()
+
+        if(direction < 0):
+            direction = 360 + direction
         rotated_image = self.attribute1.transform.rotate(self.player_image, direction)
         rotated_sword = self.attribute1.transform.rotate(self.sword, direction)
         if(keys[self.attribute1.K_SPACE]):
@@ -130,18 +136,12 @@ class Boss(Entity):
         elif(self.player.stun_count == 0):
             pos = self.player.player_move(dt)
             self.player_attack = None
-            if(direction< 0):
-                direction = 360 + direction
-            if(direction > 360):
-                direction = direction - 360
-            if(direction <= 90):
-                self.attribute2.blit(rotated_sword,(pos.x +30-(40 * direction/90), pos.y - (120*direction/90)))
-            elif(direction<= 180):
-                self.attribute2.blit(rotated_sword,(pos.x, pos.y - 20))
-            elif(direction<= 270):
-                self.attribute2.blit(rotated_sword,(pos.x, pos.y - 20))
-            elif(direction<= 360):
-                self.attribute2.blit(rotated_sword,(pos.x, pos.y - 20))
+            if(direction <= 180):
+                self.attribute2.blit(rotated_sword,(pos.x -40+60*(math.cos(math.radians(direction))), pos.y -20 -80*(math.sin(math.radians(direction)))))
+            elif(direction <= 270):
+                self.attribute2.blit(rotated_sword,(pos.x -40+60*(math.cos(math.radians(direction))), pos.y-10 -30*(math.sin(math.radians(direction)))))
+            elif(direction <360):
+                self.attribute2.blit(rotated_sword,(pos.x -40+60*(math.cos(math.radians(direction))), pos.y-20 -30*(math.sin(math.radians(direction)))))
             self.attribute2.blit(rotated_image,(pos.x -40, pos.y -40))
         else:
             self.player_attack = self.player.player_attack()
@@ -149,6 +149,8 @@ class Boss(Entity):
             self.player.stun_count = self.player.stun_count -1
         if(self.player.invulnerability > 0):
             self.player.invulnerability = self.player.invulnerability -1
+
+
         self.check_player_status()
         for num in range(5):
             if(num < self.player_health):
